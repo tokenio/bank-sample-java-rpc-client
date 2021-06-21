@@ -9,6 +9,8 @@ import io.token.proto.bankapi.AccountServiceGrpc;
 import io.token.proto.bankapi.AccountServiceGrpc.AccountServiceBlockingStub;
 import io.token.proto.bankapi.Bankapi;
 import io.token.proto.bankapi.Bankapi.GetAccountRequest;
+import io.token.proto.bankapi.Bankapi.HealthCheckRequest;
+import io.token.proto.bankapi.Bankapi.HealthCheckResponse;
 import io.token.proto.bankapi.HealthCheckServiceGrpc;
 import io.token.proto.bankapi.HealthCheckServiceGrpc.HealthCheckServiceBlockingStub;
 import io.token.proto.bankapi.TransferServiceGrpc;
@@ -53,19 +55,13 @@ public class Application {
             TransferServiceBlockingStub transfers = TransferServiceGrpc.newBlockingStub(channel);
             AccountServiceBlockingStub accounts = AccountServiceGrpc.newBlockingStub(channel);
 
-            // We will be using the Account service in this example
-            GetAccountRequest request = GetAccountRequest.newBuilder()
-                    .setAccount(BankAccount.newBuilder()
-                            .setCustom(Custom.newBuilder()
-                                    .setBankId(bankId)
-                                    .setPayload("a-valid-account-identifier")
-                                    .build())
-                            .build())
-                    .setConsentId("a-valid-consent-id")
+            // We will be using the Health Check service in this example
+            HealthCheckRequest request = HealthCheckRequest.newBuilder()
+                    .setBankId(bankId)
                     .build();
 
             System.out.println("--> OUT: " + request);
-            Bankapi.GetAccountResponse response = accounts.getAccount(request);
+            HealthCheckResponse response = health.healthCheck(request);
             System.out.println("<-- IN: " + response);
 
         } finally {
