@@ -6,10 +6,10 @@ The sample code is used as a base for testing custom integrations of Bank API im
 Build
 ------
 
-To build the client run the command specified below. The sample uses gradle build tool.
+To build the client run the command specified below. The sample uses default java tools for compiling.
 
 ```sh
-./gradlew build
+javac -classpath 'lib/*' -d build -source 8 src/io/token/exmple/client/Main.java
 ```
 
 Configuration
@@ -23,5 +23,11 @@ Run
 The build produces shadow (fat) jar that can be run from the command line:
 
 ```sh
-java -jar build/libs/bank-sample-java-rpc-client-all.jar
+java -cp 'lib/*':build io.token.exmple.client.Main
+```
+
+Windows:
+
+```sh
+java -cp 'lib/*';build io.token.exmple.client.Main
 ```
