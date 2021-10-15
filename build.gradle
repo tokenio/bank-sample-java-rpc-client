@@ -23,12 +23,12 @@ dependencies {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_16
-    targetCompatibility = JavaVersion.VERSION_16
+    sourceCompatibility = "8"
+    targetCompatibility = "8"
 }
 
 application {
-    mainClass = 'io.token.sample.rpc.client.Application'
+    mainClass = 'io.token.sample.rpc.client.Main'
 }
 
 shadowJar {
