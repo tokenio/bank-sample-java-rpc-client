@@ -70,7 +70,6 @@ public class Main {
         logger.warn("Opening channel to {}", bankId);
         ManagedChannel channel = NettyChannelBuilder
                 .forTarget(target)
-                .usePlaintext()
                 .intercept(new MetadataInterceptor(bankId))
                 .sslContext(context)
                 .keepAliveTime(50L, TimeUnit.SECONDS)
