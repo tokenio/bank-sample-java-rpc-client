@@ -47,7 +47,6 @@ public class MetadataInterceptor implements ClientInterceptor {
 
             @Override
             public void start(Listener<RespT> responseListener, Metadata headers) {
-                /* put custom header */
                 headers.put(tokenBankIdKey, bankId);
                 super.start(new SimpleForwardingClientCallListener<RespT>(responseListener) {
                     @Override
