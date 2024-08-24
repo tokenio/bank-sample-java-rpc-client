@@ -17,9 +17,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'io.token.proto:tokenio-proto-external:1.12.64'
-    implementation 'io.netty:netty-tcnative-boringssl-static:2.0.39.Final'
-    implementation 'io.grpc:grpc-netty:1.38.1'
+    implementation 'io.token.proto:tokenio-proto-external:1.21.25'
+    implementation 'io.netty:netty-tcnative-boringssl-static:2.0.61.Final'
+    implementation 'io.grpc:grpc-netty:1.59.1'
+    implementation group: 'com.google.protobuf', name: 'protobuf-java-util', version: '3.22.3'
+
+
 }
 
 java {
