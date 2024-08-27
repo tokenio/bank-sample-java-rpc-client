@@ -22,6 +22,7 @@ class TestRequests {
      * (it's likely that it is not required).
      */
     private static final String testAisConsentId = "ta:9tJNYhJ1a4NxPhtgsCqWcLiVGpXJTYjyBUZcr3bNwu9A:5zKtXEAq";
+    private static final String psuAccountPayload = "zEkDvb9tgJUPfOCk1AbTsbW/CBOSXsnAVOMe6qKkaM8=|m:2X7zH9tFewVRPNQvqHUNycmShdb6:5zKtXEAq";
 
     public static TransferRequest transferRequest() {
         return TransferRequest.newBuilder()
@@ -146,6 +147,8 @@ class TestRequests {
                                         .build())
                                 .build()))
                 .setConsentId("tt:C9JaUJL7AgdfowvhK7KpXxwTkHqLYW119FV6UctsUokC:3VMUBNCZMURCaZw")
+                .setRemittanceReference("abcd1234")
+                .setReturnRefundAccount(true)
                 .build();
     }
 
@@ -200,6 +203,8 @@ class TestRequests {
                                         .build())
                                 .build()))
                 .setConsentId("tt:C9JaUJL7AgdfowvhK7KpXxwTkHqLYW119FV6UctsUokC:3VMUBNCZMURCaZw")
+                .setRemittanceReference("abcd1234")
+                .setReturnRefundAccount(true)
                 .build();
     }
 
@@ -241,7 +246,6 @@ class TestRequests {
         return GetTransactionsRequest.newBuilder()
                 .setConsentId(testAisConsentId)
                 .setLimit(10)
-                //.setOffset("") //The offset value depends on the bank-integration implementation.
                 .setAccount(BankAccount.newBuilder()
                         .setAccountFeatures(AccountFeatures.newBuilder()
                                 .setSupportsInformation(true)
@@ -266,11 +270,11 @@ class TestRequests {
                                 .setAmount("1.99")
                                 .setCurrency("GBP")
                                 .setRefId("2")
-                                //.setDescription("")
+                                .setDescription("test transfer")
                                 .setDestination(TransferInstructionsProtos.TransferDestination.newBuilder()
                                         .setFasterPayments(TransferInstructionsProtos.TransferDestination.FasterPayments.newBuilder()
                                                 .setAccountNumber("55656666")
-                                                .setSortCode("400400")//400400
+                                                .setSortCode("400400")
                                                 .build())
                                         .setCustomerData(TransferInstructionsProtos.CustomerData.newBuilder()
                                                 .addLegalNames("Southside")
@@ -295,39 +299,6 @@ class TestRequests {
                                                 .build())
                                         .build())
                                 .build())
-                        /*.addTransfers(BulkTransferBody.Transfer.newBuilder()
-                                .setAmount("1.00")
-                                .setCurrency("GBP")
-                                .setRefId("3")
-                                .setDescription("")
-                                .setDestination(TransferDestination.newBuilder()
-                                        .setFasterPayments(TransferDestination.FasterPayments.newBuilder()
-                                                .setAccountNumber("400400")
-                                                .setSortCode("55657777")
-                                                .build())
-                                        .setCustomerData(CustomerData.newBuilder()
-                                                .addLegalNames("Southside")
-                                                .setAddress(Address.newBuilder()
-                                                        .setHouseNumber("11")
-                                                        .setHouseName("xyz")
-                                                        .setFlats("1")
-                                                        .setConscriptionNumber("1")
-                                                        .setStreet("John Street")
-                                                        .setPlace("16 Bishopsgate")
-                                                        .setPostCode("WC1N 2EB")
-                                                        .setCity("London")
-                                                        .setCountry("GB")
-                                                        .setFull("11 John Street, London, WC1N")
-                                                        .setHamlet("xyz")
-                                                        .setSuburb("xyz")
-                                                        .setSubdistrict("xyz")
-                                                        .setDistrict("xyz")
-                                                        .setProvince("xyz")
-                                                        .setState("UK")
-                                                        .build())
-                                                .build())
-                                        .build())
-                                .build())*/
                         .setTotalAmount("1.99")
                         .setSource(TransferInstructionsProtos.TransferEndpoint.newBuilder()
                                 .setAccount(BankAccount.newBuilder()
@@ -338,7 +309,7 @@ class TestRequests {
                                                 .build())
                                         .setCustom(BankAccount.Custom.newBuilder()
                                                 .setBankId("coop-sit2")
-                                                .setPayload("zEkDvb9tgJUPfOCk1AbTsbW/CBOSXsnAVOMe6qKkaM8=|m:2X7zH9tFewVRPNQvqHUNycmShdb6:5zKtXEAq")//|14a50827-a0ae-3584-91f1-673e3c7e9b6a
+                                                .setPayload(psuAccountPayload)
                                                 .build())
                                         .build())
                                 .setBankId("coop-sit2")
@@ -352,7 +323,7 @@ class TestRequests {
                                 .build())
                         .setCustom(BankAccount.Custom.newBuilder()
                                 .setBankId("coop-sit2")
-                                .setPayload("zEkDvb9tgJUPfOCk1AbTsbW/CBOSXsnAVOMe6qKkaM8=|m:2X7zH9tFewVRPNQvqHUNycmShdb6:5zKtXEAq")//|14a50827-a0ae-3584-91f1-673e3c7e9b6a
+                                .setPayload(psuAccountPayload)
                                 .build())
                         .build())
                 .setDescription("southside.com.noverifyICJON")
@@ -365,7 +336,7 @@ class TestRequests {
                                         .build())
                                 .setCustom(BankAccount.Custom.newBuilder()
                                         .setBankId("coop-sit2")
-                                        .setPayload("zEkDvb9tgJUPfOCk1AbTsbW/CBOSXsnAVOMe6qKkaM8=|m:2X7zH9tFewVRPNQvqHUNycmShdb6:5zKtXEAq")//|14a50827-a0ae-3584-91f1-673e3c7e9b6a
+                                        .setPayload(psuAccountPayload)
                                         .build())
                                 .build())
                         .setBankId("coop-sit2")

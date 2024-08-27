@@ -5,6 +5,7 @@ import static io.netty.handler.ssl.SslProvider.OPENSSL;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.util.JsonFormat;
 import io.grpc.ManagedChannel;
+import io.grpc.Status;
 import io.grpc.netty.GrpcSslContexts;
 import io.grpc.netty.NettyChannelBuilder;
 import io.netty.handler.ssl.SslContext;
@@ -41,6 +42,7 @@ public class Main {
     // Replace with corresponding values for your bank
     static String bankId = "ruby";
     static String target = "localhost:9300";
+    static int failedRequests = 0;
     
     private static final String OUT = "--> OUT: \n{}";
     private static final String IN = "<-- IN: \n{}";
@@ -96,6 +98,10 @@ public class Main {
         } finally {
             channel.shutdownNow().awaitTermination(5, TimeUnit.SECONDS);
         }
+
+        if (failedRequests > 0) {
+            throw Status.INTERNAL.withDescription("There were " + failedRequests + " failed requests!").asRuntimeException();
+        }
     }
 
     static void testHealthCheck(HealthCheckServiceBlockingStub healthCheckService) throws InvalidProtocolBufferException {
@@ -111,6 +117,7 @@ public class Main {
             logger.warn(IN, JsonFormat.printer().print(response));
         } catch (Exception e) {
             logger.error("HealthCheck failed", e);
+            failedRequests++;
         }
     }
 
@@ -124,6 +131,7 @@ public class Main {
             logger.warn(IN, JsonFormat.printer().print(transferResponse));
         } catch (Exception e) {
             logger.error("Transfer failed", e);
+            failedRequests++;
         }
     }
 
@@ -137,6 +145,7 @@ public class Main {
             logger.warn(IN, JsonFormat.printer().print(getTransferStatusResponse));
         } catch (Exception e) {
             logger.error("GetTransferStatus failed", e);
+            failedRequests++;
         }
     }
 
@@ -154,6 +163,7 @@ public class Main {
             logger.warn(IN, JsonFormat.printer().print(transferResponse));
         } catch (Exception e) {
             logger.error("Transfer failed", e);
+            failedRequests++;
         }
     }
 
@@ -167,6 +177,7 @@ public class Main {
             logger.warn(IN, JsonFormat.printer().print(bulkTransferResponse));
         } catch (Exception e) {
             logger.error("BulkTransfer failed", e);
+            failedRequests++;
         }
     }
 
@@ -188,6 +199,7 @@ public class Main {
             logger.warn(IN, JsonFormat.printer().print(getBalanceResponse));
         } catch (Exception e) {
             logger.error("GetBalance failed", e);
+            failedRequests++;
         }
     }
 
@@ -203,6 +215,7 @@ public class Main {
             logger.warn(IN, JsonFormat.printer().print(getAccountResponse));
         } catch (Exception e) {
             logger.error("GetAccount failed", e);
+            failedRequests++;
         }
     }
 
@@ -216,6 +229,7 @@ public class Main {
             logger.warn(IN, JsonFormat.printer().print(getTransactionsResponse));
         } catch (Exception e) {
             logger.error("GetTransactions failed", e);
+            failedRequests++;
         }
     }
 
